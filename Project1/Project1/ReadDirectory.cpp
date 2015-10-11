@@ -3,6 +3,7 @@
 #include <stdlib.h> // exit()
 #include <iostream>
 using namespace std;
+#include <cstring>
 #include <string>
 
 ReadDirectory::ReadDirectory()
@@ -22,10 +23,15 @@ void ReadDirectory::readDirectory()
 
 	DIR *pdir = NULL; // remember, it's good practice to initialise a pointer to NULL!
 	struct dirent *pent = NULL;
-	string dirName = "";
-	cout << "Enter the fill path and directory name:\t";
-	cin >> dirName;
-	pdir = opendir("F:/Year3/AlgorithmDataStructure/elapsedCA/Checker"); // "." will refer to the current directory
+	string dirName = "F:/Year3/AlgorithmDataStructure/elapsedCA/";
+	string word = "";
+	cout << "Enter the full path and directory name:\t";
+	cin >> word;
+	dirName = dirName + word;
+	//these next 2 lines of code convert the string to char const to enable it to reead by the open dir command 
+	/*char *cstr = new char[dirName.length() + 1];
+	strcpy(cstr, dirName.c_str());*/
+	pdir = opendir(dirName.c_str()); // "." will refer to the current directory
 
 	if (pdir == NULL) // if pdir wasn't initialised correctly
 	{ // print an error message and exit the 
@@ -33,6 +39,8 @@ void ReadDirectory::readDirectory()
 		system("pause");
 		exit(1); // exit the program, using 1 as the status (most common for a failed execution)
 	} // end if
+
+	string fileName = "";
 	while (pent = readdir(pdir)) // while there is still something in the directory to list
 	{
 		if (pent == NULL) // if pent has not been initialised correctly
@@ -41,9 +49,9 @@ void ReadDirectory::readDirectory()
 			cout << "ERROR! pent could not be initialised correctly";
 			exit(3);
 		}
-
+		
 		// otherwise, it was initialised correctly. let's print it on the console:
-
+		
 		cout << pent->d_name << endl;
 	}
 

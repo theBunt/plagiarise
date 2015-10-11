@@ -12,7 +12,8 @@ int main() // entry point of the program
 {
 	ReadDirectory readDir("Example");
 	cout << readDir.getName() << endl;
-	readDir.readFile();
+	readDir.readDirectory();
+	//readDir.readFile();
 	system("pause");
 
 		return 0; // everything went OK
