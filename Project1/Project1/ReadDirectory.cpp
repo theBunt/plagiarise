@@ -17,20 +17,21 @@ ReadDirectory::ReadDirectory(string id)
 	name = id;
 }
 
-void ReadDirectory::readDirectory()
+void ReadDirectory::readDirFilenames()
 {
 	// code taken from http://www.dreamincode.net/forums/topic/59943-accessing-directories-in-cc-part-i/
 	//  *************************************************************************
 
 	DIR *pdir = NULL; // remember, it's good practice to initialise a pointer to NULL!
 	struct dirent *pent = NULL;
-	string dirName = "G:/algoData/";
+	string dirName = "F:/Year3/AlgorithmDataStructure/elapsedCA/";
 	string word = "";
 	cout << "Enter the full path and directory name:\t";
 	cin >> word;
 	dirName = dirName + word;
-	//this next lines of code convert the string to char const to enable it to reead by the open dir command 
-	
+	//these next 2 lines of code convert the string to char const to enable it to reead by the open dir command 
+	/*char *cstr = new char[dirName.length() + 1];
+	strcpy(cstr, dirName.c_str());*/
 	pdir = opendir(dirName.c_str()); // "." will refer to the current directory
 
 	if (pdir == NULL) // if pdir wasn't initialised correctly
@@ -40,7 +41,7 @@ void ReadDirectory::readDirectory()
 		exit(1); // exit the program, using 1 as the status (most common for a failed execution)
 	} // end if
 
-	string fileName = " ";
+	string fileName = "";
 	while (pent = readdir(pdir)) // while there is still something in the directory to list
 	{
 		if (pent == NULL) // if pent has not been initialised correctly
@@ -54,13 +55,14 @@ void ReadDirectory::readDirectory()
 		fileName = dirName + "/" + pent->d_name;
 		cout << fileName;
 		
-		//cout << pent->d_name << endl;
+		cout << pent->d_name << endl;
 	}
 
 
 	closedir(pdir);
 
 	// *****************************************************************************
+	
 }
 
 string ReadDirectory::getName()
@@ -70,17 +72,30 @@ string ReadDirectory::getName()
 
 void ReadDirectory::readFile()
 {
-	inStream.open(fileName);
+	inStream.open("F:/Year3/AlgorithmDataStructure/elapsedCA/Checker/HotdogStand.cpp");
 	if (inStream.fail())
 	{
-		cout << "Input file opening failed.\n";
+			cout << "\nInput file opening failed.\n";
 		system("pause");
 		exit(1);
 	}
-	cout << "Extracting from file:";
+		cout << "\n******************\nExtracting from file: " << filenames[i] << endl;
 	string word;
 	while (!inStream.eof()) {
 		inStream >> word;
-		cout << word;
+			/*if (word == "for" || word == "while")
+				c1.assessWord(word);*/
+			cout << word << " ";
+		}
+		//make sure to close the instream before looping around and trying to read the next file
+		inStream.close();
+			
 	}
+	}
+
+vector<string> ReadDirectory::getFileNames()
+{
+	return filenames;
 }
+
+
