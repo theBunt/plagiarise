@@ -15,6 +15,7 @@ class ReadDirectory
 		ifstream inStream;
 		ofstream outStream;
 		string name;
+		string fileName;
 	public:
 		ReadDirectory();
 		ReadDirectory(string);

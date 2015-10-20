@@ -1,4 +1,5 @@
 #include "ReadDirectory.h"
+#include <dirent.h>
 #include <stdio.h> // printf()
 #include <stdlib.h> // exit()
 #include <iostream>
@@ -23,14 +24,13 @@ void ReadDirectory::readDirectory()
 
 	DIR *pdir = NULL; // remember, it's good practice to initialise a pointer to NULL!
 	struct dirent *pent = NULL;
-	string dirName = "F:/Year3/AlgorithmDataStructure/elapsedCA/";
+	string dirName = "G:/algoData/";
 	string word = "";
 	cout << "Enter the full path and directory name:\t";
 	cin >> word;
 	dirName = dirName + word;
-	//these next 2 lines of code convert the string to char const to enable it to reead by the open dir command 
-	/*char *cstr = new char[dirName.length() + 1];
-	strcpy(cstr, dirName.c_str());*/
+	//this next lines of code convert the string to char const to enable it to reead by the open dir command 
+	
 	pdir = opendir(dirName.c_str()); // "." will refer to the current directory
 
 	if (pdir == NULL) // if pdir wasn't initialised correctly
@@ -40,7 +40,7 @@ void ReadDirectory::readDirectory()
 		exit(1); // exit the program, using 1 as the status (most common for a failed execution)
 	} // end if
 
-	string fileName = "";
+	string fileName = " ";
 	while (pent = readdir(pdir)) // while there is still something in the directory to list
 	{
 		if (pent == NULL) // if pent has not been initialised correctly
@@ -51,9 +51,12 @@ void ReadDirectory::readDirectory()
 		}
 		
 		// otherwise, it was initialised correctly. let's print it on the console:
+		fileName = dirName + "/" + pent->d_name;
+		cout << fileName;
 		
-		cout << pent->d_name << endl;
+		//cout << pent->d_name << endl;
 	}
+
 
 	closedir(pdir);
 
@@ -67,7 +70,7 @@ string ReadDirectory::getName()
 
 void ReadDirectory::readFile()
 {
-	inStream.open("F:/Year3/AlgorithmDataStructure/elapsedCA/Checker/HotdogStand.cpp");
+	inStream.open(fileName);
 	if (inStream.fail())
 	{
 		cout << "Input file opening failed.\n";
