@@ -2,6 +2,7 @@
 #include <stdio.h> // printf()
 #include <stdlib.h> // exit()
 #include <iostream>
+#include <vector>
 using namespace std;
 #include <string>
 
@@ -15,10 +16,14 @@ class ReadDirectory
 		ifstream inStream;
 		ofstream outStream;
 		string name;
+		vector<string> filenames;    // declares a vector of to store the filenames
+		//vector<CheckedForPlagerism> checkList;
 	public:
 		ReadDirectory();
 		ReadDirectory(string);
-		void readDirectory();
+		void readDirFilenames();
 		string getName();
 		void readFile();
+		vector<string> getFileNames();
+		
 };
