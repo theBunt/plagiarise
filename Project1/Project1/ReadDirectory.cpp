@@ -1,4 +1,5 @@
 #include "ReadDirectory.h"
+#include <dirent.h>
 #include <stdio.h> // printf()
 #include <stdlib.h> // exit()
 #include <iostream>
@@ -23,15 +24,15 @@ void ReadDirectory::readDirFilenames()
 
 	DIR *pdir = NULL; // remember, it's good practice to initialise a pointer to NULL!
 	struct dirent *pent = NULL;
-	name = "F:/Year3/AlgorithmDataStructure/elapsedCA/";//hardcode for convenience, change to what suits!!
+	string dirName = "F:/Year3/AlgorithmDataStructure/elapsedCA/";
 	string word = "";
 	cout << "Enter the full path and directory name:\t";
 	cin >> word;
-	name = name + word;
+	dirName = dirName + word;
 	//these next 2 lines of code convert the string to char const to enable it to reead by the open dir command 
-	/*char *cstr = new char[name.length() + 1];
-	strcpy(cstr, name.c_str());*/
-	pdir = opendir(name.c_str()); // "." will refer to the current directory
+	/*char *cstr = new char[dirName.length() + 1];
+	strcpy(cstr, dirName.c_str());*/
+	pdir = opendir(dirName.c_str()); // "." will refer to the current directory
 
 	if (pdir == NULL) // if pdir wasn't initialised correctly
 	{ // print an error message and exit the 
@@ -40,7 +41,7 @@ void ReadDirectory::readDirFilenames()
 		exit(1); // exit the program, using 1 as the status (most common for a failed execution)
 	} // end if
 
-	string fName = "";
+	string fileName = "";
 	while (pent = readdir(pdir)) // while there is still something in the directory to list
 	{
 		if (pent == NULL) // if pent has not been initialised correctly
@@ -49,21 +50,18 @@ void ReadDirectory::readDirFilenames()
 			cout << "ERROR! pent could not be initialised correctly";
 			exit(3);
 		}
-
+		
 		// otherwise, it was initialised correctly. let's print it on the console:
-
-		else if (pent->d_name[0] != '.')
-		{
-			string temp = name;
-			fName = pent->d_name;
-			temp = name + "/" + fName;
-			filenames.push_back(temp);
-		}
+		fileName = dirName + "/" + pent->d_name;
+		cout << fileName;
+		
+		cout << pent->d_name << endl;
 	}
 
-		closedir(pdir);
 
-		// *****************************************************************************
+	closedir(pdir);
+
+	// *****************************************************************************
 	
 }
 
@@ -74,21 +72,17 @@ string ReadDirectory::getName()
 
 void ReadDirectory::readFile()
 {
-	//this loop transverses the vector storing the filenames and inputs them 
-	for (size_t i = 0; i < filenames.size(); i++)
+	inStream.open("F:/Year3/AlgorithmDataStructure/elapsedCA/Checker/HotdogStand.cpp");
+	if (inStream.fail())
 	{
-		//PlageriseCount c1
-		inStream.open(filenames[i]);
-		if (inStream.fail())
-		{
 			cout << "\nInput file opening failed.\n";
-			system("pause");
-			exit(1);
-		}
+		system("pause");
+		exit(1);
+	}
 		cout << "\n******************\nExtracting from file: " << filenames[i] << endl;
-		string word;
-		while (!inStream.eof()) {
-			inStream >> word;
+	string word;
+	while (!inStream.eof()) {
+		inStream >> word;
 			/*if (word == "for" || word == "while")
 				c1.assessWord(word);*/
 			cout << word << " ";
@@ -97,7 +91,7 @@ void ReadDirectory::readFile()
 		inStream.close();
 			
 	}
-}
+	}
 
 vector<string> ReadDirectory::getFileNames()
 {

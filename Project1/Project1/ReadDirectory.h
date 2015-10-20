@@ -16,8 +16,6 @@ class ReadDirectory
 		ifstream inStream;
 		ofstream outStream;
 		string name;
-		vector<string> filenames;    // declares a vector of to store the filenames
-		//vector<CheckedForPlagerism> checkList;
 	public:
 		ReadDirectory();
 		ReadDirectory(string);
