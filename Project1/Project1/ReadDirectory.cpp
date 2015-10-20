@@ -28,9 +28,7 @@ void ReadDirectory::readDirFilenames()
 	cout << "Enter the full path and directory name:\t";
 	cin >> word;
 	name = name + word;
-	//these next 2 lines of code convert the string to char const to enable it to reead by the open dir command 
-	/*char *cstr = new char[name.length() + 1];
-	strcpy(cstr, name.c_str());*/
+	
 	pdir = opendir(name.c_str()); // "." will refer to the current directory
 
 	if (pdir == NULL) // if pdir wasn't initialised correctly
