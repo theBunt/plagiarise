@@ -1,4 +1,5 @@
 #include <dirent.h>// directory header
+#include "FileCheck.h"
 #include <stdio.h> // printf()
 #include <stdlib.h> // exit()
 #include <iostream>
@@ -17,7 +18,7 @@ class ReadDirectory
 		ofstream outStream;
 		string name;
 		vector<string> filenames;    // declares a vector of to store the filenames
-		//vector<CheckedForPlagerism> checkList;
+		vector<FileCheck> checkedForPlagurism; // declares a vector to store objects of type FileCheck
 	public:
 		ReadDirectory();
 		ReadDirectory(string);
